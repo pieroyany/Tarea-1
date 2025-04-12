@@ -105,7 +105,13 @@ int main() {
       mostrar_lista_clientes(clientes);
       break;
     case '3':
-      // Lógica para atender al siguiente cliente
+      if (list_size(clientes) > 0) {
+        Cliente *cliente_atendido = (Cliente *)list_popFront(clientes);
+        printf("Atendiendo a: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c\n", cliente_atendido->nombre, cliente_atendido->dispositivo, cliente_atendido->fecha.dia, cliente_atendido->fecha.mes, cliente_atendido->fecha.año, cliente_atendido->prioridad);
+        free(cliente_atendido); // liberar memoria del cliente atendido
+      } else {
+        puts("No hay clientes en espera.");
+      }
       break;
     case '4':
       puts("Saliendo del sistema de servicio técnico...");
