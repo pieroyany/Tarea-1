@@ -34,16 +34,16 @@ void registrar_cliente(List *clientes) {
   Cliente nuevo_cliente;
   printf("Registrar nuevo cliente\n");
   printf("Ingrese el nombre del cliente:\n");
-  scanf("%s", &nuevo_cliente->nombre);
+  scanf("%s", &nuevo_cliente.nombre);
 
   printf("Ingrese el tipo de dispositivo\n1: smartphone\n2: laptop\n3: audífonos\n");
-  scanf(" %c", &nuevo_cliente->dispositivo);
+  scanf(" %c", &nuevo_cliente.dispositivo);
 
   printf("Ingrese la fecha de ingreso (DD/MM/AAAA):\n");
-  scanf("%s/%s/%s", &nuevo_cliente->fecha->dia, &nuevo_cliente->fecha->mes, &nuevo_cliente->fecha->año);
+  scanf("%s/%s/%s", &nuevo_cliente.fecha->dia, &nuevo_cliente.fecha->mes, &nuevo_cliente.fecha.año);
   
   printf("Ingrese la prioridad de atención del cliente (1-3):\n");
-  scanf(" %c", &nuevo_cliente->prioridad);
+  scanf(" %c", &nuevo_cliente.prioridad);
 }
 
 void mostrar_lista_cliente(List *clientes) {
