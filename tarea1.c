@@ -100,17 +100,25 @@ int main() {
     switch (opcion) {
     case '1':
       registrar_cliente(clientes);
+      presioneTeclaParaContinuar();
+      limpiarPantalla();
       break;
     case '2':
       mostrar_lista_clientes(clientes);
+      presioneTeclaParaContinuar();
+      limpiarPantalla();
       break;
     case '3':
       if (list_size(clientes) > 0) {
         Cliente *cliente_atendido = (Cliente *)list_popFront(clientes);
         printf("Atendiendo a: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c\n", cliente_atendido->nombre, cliente_atendido->dispositivo, cliente_atendido->fecha.dia, cliente_atendido->fecha.mes, cliente_atendido->fecha.año, cliente_atendido->prioridad);
         free(cliente_atendido); // liberar memoria del cliente atendido
+        presioneTeclaParaContinuar();
+        limpiarPantalla();
       } else {
         puts("No hay clientes en espera.");
+        presioneTeclaParaContinuar();
+        limpiarPantalla();
       }
       break;
     case '4':
