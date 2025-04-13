@@ -4,20 +4,20 @@
 #include <stdlib.h>
 //------------------------------------------------------------------------------------------------
 typedef struct {
+  char dia[2];
+  char mes[2];
+  char anio[4];
+} fecha;
+
+typedef struct {
   char nombre[50];
   char dispositivo;
   fecha fecha;
   char prioridad;
 } Cliente;
-
-typedef struct {
-  char dia[2];
-  char mes[2];
-  char año[4];
-} fecha;
 //------------------------------------------------------------------------------------------------
 // funcion para usar sortedinsert
-int lower_than(char *data1, char *data2) {
+int lower_than(void *data1, void *data2) {
   Cliente *a = (Cliente *)data1;
   Cliente *b = (Cliente *)data2;
 
@@ -26,8 +26,8 @@ int lower_than(char *data1, char *data2) {
       return a->prioridad > b->prioridad;
 
   // misma prioridad, comparar fecha
-  int anioA = atoi(a->fecha.año);
-  int anioB = atoi(b->fecha.año);
+  int anioA = atoi(a->fecha.anio);
+  int anioB = atoi(b->fecha.anio);
   if (anioA != anioB) return anioA < anioB;
 
   int mesA = atoi(a->fecha.mes);
@@ -68,7 +68,7 @@ void registrar_cliente(List *clientes) {
   scanf(" %c", &nuevo_cliente->dispositivo);
 
   printf("Ingrese la fecha de ingreso (DD/MM/AAAA):\n");
-  scanf("%s/%s/%s", &nuevo_cliente->fecha.dia, &nuevo_cliente->fecha.mes, &nuevo_cliente->fecha.año);
+  scanf("%s/%s/%s", &nuevo_cliente->fecha.dia, &nuevo_cliente->fecha.mes, &nuevo_cliente->fecha.anio);
   
   printf("Ingrese la prioridad de atención del cliente (1-3):\n");
   scanf(" %c", &nuevo_cliente->prioridad);
@@ -77,12 +77,12 @@ void registrar_cliente(List *clientes) {
   list_sortedInsert(clientes, nuevo_cliente, lower_than);
 }
 
-void mostrar_lista_cliente(List *clientes) {
+void mostrar_lista_clientes(List *clientes) {
   // Mostrar clientes en la cola de espera
   printf("Clientes en espera: \n");
   for (int i = 0; i < list_size(clientes); i++) {
     Cliente *cliente = (Cliente *)list_first(clientes);
-    printf("Cliente %d: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c",i + 1, cliente->nombre, cliente->dispositivo, cliente->fecha.dia, cliente->fecha.mes, cliente->fecha.año, cliente->prioridad);
+    printf("Cliente %d: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c",i + 1, cliente->nombre, cliente->dispositivo, cliente->fecha.dia, cliente->fecha.mes, cliente->fecha.anio, cliente->prioridad);
     list_next(clientes);
   }
 }
@@ -94,8 +94,7 @@ int main() {
   do {
     mostrarMenuPrincipal();
     printf("Ingrese su opción: ");
-    scanf(" %c", &opcion); // Nota el espacio antes de %c para consumir el
-                           // newline anterior
+    scanf(" %c", &opcion);
 
     switch (opcion) {
     case '1':
@@ -111,7 +110,7 @@ int main() {
     case '3':
       if (list_size(clientes) > 0) {
         Cliente *cliente_atendido = (Cliente *)list_popFront(clientes);
-        printf("Atendiendo a: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c\n", cliente_atendido->nombre, cliente_atendido->dispositivo, cliente_atendido->fecha.dia, cliente_atendido->fecha.mes, cliente_atendido->fecha.año, cliente_atendido->prioridad);
+        printf("Atendiendo a: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c\n", cliente_atendido->nombre, cliente_atendido->dispositivo, cliente_atendido->fecha.dia, cliente_atendido->fecha.mes, cliente_atendido->fecha.anio, cliente_atendido->prioridad);
         free(cliente_atendido); // liberar memoria del cliente atendido
         presioneTeclaParaContinuar();
         limpiarPantalla();
@@ -131,8 +130,7 @@ int main() {
 
   } while (opcion != '4');
 
-  // Liberar recursos, si es necesario
   list_clean(clientes);
-
+  free(clientes); // liberar memoria de la lista
   return 0;
 }
