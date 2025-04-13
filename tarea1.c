@@ -48,7 +48,7 @@ void mostrarMenuPrincipal() {
 
   puts("1) Registrar cliente");
   puts("2) Mostrar lista de espera");
-  puts("3) Atender al siguiente paciente");
+  puts("3) Atender al siguiente cliente");
   puts("4) Salir");
 }
 
