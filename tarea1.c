@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
   char nombre[50];
-  char dispositivo;
+  char dispositivo[20];
   fecha fecha;
   char prioridad;
 } Cliente;
@@ -43,7 +43,7 @@ int lower_than(void *data1, void *data2) {
 void mostrarMenuPrincipal() {
   limpiarPantalla();
   puts("========================================");
-  puts("     Sistema de Servivio Tecnico");
+  puts("     Sistema de Servicio Tecnico");
   puts("========================================");
 
   puts("1) Registrar cliente");
@@ -69,13 +69,13 @@ void registrar_cliente(List *clientes) {
   printf("Ingrese el tipo de dispositivo\n1: smartphone\n2: laptop\n3: audifonos\n4: otro\n");
   scanf(" %c", &temp);
   if (temp == '1') {
-    nuevo_cliente->dispositivo = 'smartphone';
+    strcpy(nuevo_cliente->dispositivo, "smartphone");
   } else if (temp == '2') {
-    nuevo_cliente->dispositivo = 'laptop';
+    strcpy(nuevo_cliente->dispositivo, "laptop");
   } else if (temp == '3') {
-    nuevo_cliente->dispositivo = 'audifonos';
+    strcpy(nuevo_cliente->dispositivo, "audifonos");
   } else if (temp == '4') {
-    nuevo_cliente->dispositivo = 'otro';
+    strcpy(nuevo_cliente->dispositivo, "otro");
   } else {
     printf("Dispositivo no valido\n");
     free(nuevo_cliente);
@@ -119,7 +119,7 @@ void mostrar_lista_clientes(List *clientes) {
   Cliente *cliente = (Cliente *)list_first(clientes);
   int i = 1;
   while (cliente != NULL) {
-    printf("Cliente %d: %s, Dispositivo: %c, Fecha: %s/%s/%s, Prioridad: %c\n",
+    printf("Cliente %d: %s, Dispositivo: %s, Fecha: %s/%s/%s, Prioridad: %c\n",
            i, cliente->nombre, cliente->dispositivo,
            cliente->fecha.dia, cliente->fecha.mes, cliente->fecha.anio,
            cliente->prioridad);
